@@ -2,7 +2,7 @@
   "name": "sqltools-athena-driver",
   "displayName": "SQLTools AWS Athena Driver",
   "description": "SQLTools AWS Athena Driver",
-  "version": "0.3.5",
+  "version": "0.3.55",
   "publisher": "pomaretta",
   "license": "MIT",
   "icon": "icons/extension_icon.png",
