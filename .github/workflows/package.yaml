@@ -24,8 +24,7 @@ jobs:
         run: npm run vscode:prepublish
       - name: Package
         run: npm run vscode:package
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
+      - uses: ncipollo/release-action@v1
         with:
-          name: dist
-          path: dist/*.vsix
+          artifacts: dist/*.vsix
+          token: ${{ secrets.GITHUB_TOKEN }}
