@@ -31,21 +31,13 @@
     "onCommand:sqltools.*"
   ],
   "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "sqltools-athena-driver.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "vscode:prepublish": "tsc -p ./ && npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./",
+    "vscode:package": "vsce package --allow-star-activation -o ./dist"
   },
   "dependencies": {
     "@sqltools/base-driver": "^0.1.11",
@@ -57,7 +49,7 @@
     "@babel/preset-env": "^7.5.5",
     "@types/node": "18.x",
     "@types/vscode": "^1.42.0",
-    "typescript": "^3.7.3"
+    "esbuild": "^0.21.4"
   },
   "extensionDependencies": [
     "mtxr.sqltools"
