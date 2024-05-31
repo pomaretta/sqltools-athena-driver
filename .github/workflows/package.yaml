@@ -1,0 +1,31 @@
+name: Package 📦
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
+      - name: Install NPM dependencies
+        run: npm install --no-save
+      - name: Install typescript
+        run: npm install -g typescript@5.4.5
+      - name: Install vsce
+        run: npm install -g vsce@latest
+      - name: Compile
+        run: npm run vscode:prepublish
+      - name: Package
+        run: npm run vscode:package
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/*.vsix
