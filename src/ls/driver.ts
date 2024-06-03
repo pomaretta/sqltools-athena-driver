@@ -453,6 +453,22 @@ export default class AthenaDriver extends AbstractDriver<Athena, Athena.Types.Cl
                   columns.push(colDetails);
                 }
               }
+              if (data.TableMetadata.PartitionKeys) {
+                for (const col of data.TableMetadata.PartitionKeys) {
+                  const colDetails: NSDatabase.IColumn = {
+                    database: table.database,
+                    label: col.Name,
+                    type: itemType,
+                    schema: table.database,
+                    dataType: col.Type,
+                    childType: ContextValue.NO_CHILD,
+                    isNullable: true,
+                    iconName: 'column',
+                    table: table.label
+                  }
+                  columns.push(colDetails);
+                }
+              }
             }
           }).promise();
         }
